@@ -1,6 +1,8 @@
 ﻿namespace MinesweeperProject
 {
-    internal class MinesweeperCell
+    using Interfaces;
+
+    internal class MinesweeperCell : IMinesweeperCell
     {
         /// <summary>
         /// Represents a cell on the minefield.

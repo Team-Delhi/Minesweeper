@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Exceptions;
 
     /// <summary>
     /// This is the engine of the game

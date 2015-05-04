@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Exceptions;
 
     internal class MinesweeperGrid
     {
@@ -53,6 +54,38 @@
                 this.grid = value;
                 this.FillGrid(this.grid);
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("   ");
+
+            for (int i = 0; i < this.Columns; i++)
+            {
+                sb.AppendFormat(" {0}", i);
+            }
+
+            sb.Append(" \n");
+            sb.Append("   ");
+            sb.Append('-', (this.Columns * 2) + 1);
+            sb.Append(" \n");
+
+            for (int i = 0; i < this.Rows; i++)
+            {
+                sb.AppendFormat("{0} |", i);
+                for (int j = 0; j < this.Columns; j++)
+                {
+                    sb.AppendFormat(" {0}", this.grid[i, j].VisibleValue);
+                }
+
+                sb.Append(" |\n");
+            }
+
+            sb.Append("   ");
+            sb.Append('-', (this.Columns * 2) + 1);
+            sb.Append(" \n");
+            return sb.ToString();
         }
 
         /// <summary>
@@ -241,38 +274,6 @@
             }
 
             return coordinates;
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("   ");
-
-            for (int i = 0; i < this.Columns; i++)
-            {
-                sb.AppendFormat(" {0}", i);
-            }
-
-            sb.Append(" \n");
-            sb.Append("   ");
-            sb.Append('-', (this.Columns * 2) + 1);
-            sb.Append(" \n");
-
-            for (int i = 0; i < this.Rows; i++)
-            {
-                sb.AppendFormat("{0} |", i);
-                for (int j = 0; j < this.Columns; j++)
-                {
-                    sb.AppendFormat(" {0}", this.grid[i, j].VisibleValue);
-                }
-
-                sb.Append(" |\n");
-            }
-
-            sb.Append("   ");
-            sb.Append('-', (this.Columns * 2) + 1);
-            sb.Append(" \n");
-            return sb.ToString();
         }
     }
 }

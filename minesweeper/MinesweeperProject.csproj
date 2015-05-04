@@ -43,12 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleMinesweeperGame.cs" />
-    <Compile Include="MinesweeperCell.cs" />
-    <Compile Include="MinesweeperExceptions.cs" />
-    <Compile Include="MinesweeperGrid.cs" />
+    <Compile Include="Core\ConsoleMinesweeperGame.cs" />
+    <Compile Include="Exceptions\CommandUnknownException.cs" />
+    <Compile Include="Exceptions\IllegalMoveException.cs" />
+    <Compile Include="Exceptions\IncalidCellException.cs" />
+    <Compile Include="Interfaces\IMinesweeperCell.cs" />
+    <Compile Include="Models\MinesweeperCell.cs" />
+    <Compile Include="Models\MinesweeperGrid.cs" />
     <Compile Include="GameMain.cs" />
-    <Compile Include="ScoreRecord.cs" />
+    <Compile Include="Models\ScoreRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
