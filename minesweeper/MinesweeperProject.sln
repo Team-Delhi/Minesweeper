@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinesweeperProject", "MinesweeperProject.csproj", "{22FD43B4-6218-44FD-9611-D7538FFFDBEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testing123", "..\testing123\testing123.csproj", "{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,16 +25,6 @@ Global
 		{22FD43B4-6218-44FD-9611-D7538FFFDBEA}.Release|Mixed Platforms.Build.0 = Release|x86
 		{22FD43B4-6218-44FD-9611-D7538FFFDBEA}.Release|x86.ActiveCfg = Release|x86
 		{22FD43B4-6218-44FD-9611-D7538FFFDBEA}.Release|x86.Build.0 = Release|x86
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3DABF5FB-3F42-44BC-AC9C-95E2F9D536C2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
