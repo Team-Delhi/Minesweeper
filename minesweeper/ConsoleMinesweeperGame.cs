@@ -1,19 +1,29 @@
-﻿namespace MinesweeperProject
+﻿using System.Collections.Generic;
+
+namespace MinesweeperProject
 {
     using System;
     using System.Linq;
     using System.Text;
 
-    class ConsoleMinesweeperGame : MinesweeperGame
+    class ConsoleMinesweeperGame
     {
         public ConsoleMinesweeperGame(int rows, int columns, int minesCount)
-            : base(rows, columns, minesCount)
         {
+            this.Grid = new MinesweeperGrid(rows, columns, minesCount);
+            this.ScoreBoard = new List<ScoreRecord>();
         }
 
-        public override void Start()
+        public List<ScoreRecord> ScoreBoard { get; set; }
+
+        public int Score { get; set; }
+
+        public MinesweeperGrid Grid { get; private set; }
+
+        public void Start()
         {
-            base.Start();
+            this.Grid.RestartBoard();
+            this.Score = 0;
             const string startMessage = "Welcome to the game “Minesweeper”. Try to reveal all cells without mines. Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit the game.";
             Console.WriteLine(startMessage);
             Console.WriteLine(Grid.ToString());

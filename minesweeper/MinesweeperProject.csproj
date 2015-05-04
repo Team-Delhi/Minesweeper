@@ -46,7 +46,6 @@
     <Compile Include="ConsoleMinesweeperGame.cs" />
     <Compile Include="MinesweeperCell.cs" />
     <Compile Include="MinesweeperExceptions.cs" />
-    <Compile Include="MinesweeperGame.cs" />
     <Compile Include="MinesweeperGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ScoreBoard.cs" />
