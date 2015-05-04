@@ -153,7 +153,7 @@
         /// </summary>
         /// <param name="row">X coordinate</param>
         /// <param name="column">Y coordinate</param>
-        /// <returns></returns>
+        /// <returns>Cell char value</returns>
         public char RevealCell(int row, int column)
         {
             if ((!this.IsCellOnBoard(row, column)) || this.grid[row, column].Revealed)
@@ -204,6 +204,18 @@
             }
 
             return count;
+        }
+
+        /// <summary>
+        /// Check if cell is on board.
+        /// </summary>
+        /// <param name="row">X coordinate</param>
+        /// <param name="column">Y coordinate</param>
+        /// <returns>boolean</returns>
+        private bool IsCellOnBoard(int row, int column)
+        {
+            bool onBoard = (row >= 0 && row < this.Rows) && (column >= 0 && column < this.Columns);
+            return onBoard;
         }
 
         /// <summary>
