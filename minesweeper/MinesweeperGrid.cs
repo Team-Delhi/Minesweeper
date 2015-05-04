@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MinesweeperProject
 {
@@ -10,6 +11,12 @@ namespace MinesweeperProject
 
         private MinesweeperCell[,] grid;
 
+        /// <summary>
+        /// Represent the mine field.
+        /// </summary>
+        /// <param name="rows">Amount of rows in the minefield</param>
+        /// <param name="columns">Amount of columns in the minefield</param>
+        /// <param name="minesCount">Amount of mines on the minefield</param>
         public MinesweeperGrid(int rows, int columns, int minesCount)
         {
             Rows = rows;
@@ -18,30 +25,47 @@ namespace MinesweeperProject
             Grid = new MinesweeperCell[rows, columns];
         }
 
+        /// <summary>
+        /// Amount of rows in the minefield.
+        /// </summary>
         private int Rows { get; set; }
+
+        /// <summary>
+        /// Amount of columns in the minefield.
+        /// </summary>
         private int Columns { get; set; }
+
+        /// <summary>
+        /// Amount of mines on the minefield.
+        /// </summary>
         private int MinesCount { get; set; }
+
+        /// <summary>
+        /// A matrice representing the mines on the grid.
+        /// </summary>
         private MinesweeperCell[,] Grid
         {
             get { return grid; }
             set
             {
                 grid = value;
-                FillGrid(grid, Rows, Columns);
+                FillGrid(grid);
             }
         }
 
+        /// <summary>
+        /// Restarts the boar and places new mines
+        /// </summary>
         public void RestartBoard()
         {
             RestartGrid();
             PlaceMines();
         }
 
-        private void RestartGrid()
-        {
-            this.Grid = new MinesweeperCell[this.Rows, this.Columns];
-        }
 
+        /// <summary>
+        /// Reveals all mines on the board.
+        /// </summary>
         public void RevealMines()
         {
             foreach (MinesweeperCell mine in grid)
@@ -53,12 +77,18 @@ namespace MinesweeperProject
             }
         }
 
+
+        /// <summary>
+        /// Replaces all fields that are unrevealed and not mines with given marker.
+        /// </summary>
+        /// <param name="marker">Marker to replace with</param>
         public void MarkUnrevealedMines(char marker)
         {
             foreach (var elem in grid)
             {
                 if ((!elem.Revealed))
-                {   elem.Revealed = true;
+                {
+                    elem.Revealed = true;
                     if (elem.Value != '*')
                     {
                         elem.Value = marker;
@@ -67,23 +97,42 @@ namespace MinesweeperProject
             }
         }
 
-        public void FillGrid(MinesweeperCell[,] minesGrid, int rows, int columns)
+        /// <summary>
+        /// Fills grid with empty fields.
+        /// </summary>
+        /// <param name="minesGrid">Grid</param>
+        public void FillGrid(MinesweeperCell[,] minesGrid)
         {
-            for (int row = 0; row < Rows; row++)
+            var rows = minesGrid.GetLength(0);
+            int columns = minesGrid.GetLength(1);
+
+            for (int row = 0; row < rows; row++)
             {
-                for (int column = 0; column < Columns; column++)
+                for (int column = 0; column < columns; column++)
                 {
                     minesGrid[row, column] = new MinesweeperCell();
                 }
             }
         }
 
+        /// <summary>
+        /// Check if cell is on board.
+        /// </summary>
+        /// <param name="row">X coordinate</param>
+        /// <param name="column">Y coordinate</param>
+        /// <returns>boolean</returns>
         public bool IsCellOnBoard(int row, int column)
         {
-            bool onBoard = (row >= 0 && row < Rows) && (column >= 0 && column < Columns);
+            bool onBoard = (row >= 0 && row < this.Rows) && (column >= 0 && column < this.Columns);
             return onBoard;
         }
 
+        /// <summary>
+        /// Reveal a cell by given coordinates.
+        /// </summary>
+        /// <param name="row">X coordinate</param>
+        /// <param name="column">Y coordinate</param>
+        /// <returns></returns>
         public char RevealCell(int row, int column)
         {
             if ((!IsCellOnBoard(row, column)) || grid[row, column].Revealed)
@@ -101,20 +150,27 @@ namespace MinesweeperProject
             return grid[row, column].Value;
         }
 
+
+        /// <summary>
+        /// Get count of mines positioned around coordinate
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         public int GetNeighbourMinesCount(int row, int column)
         {
+            int count = 0;
+
             if (!IsCellOnBoard(row, column))
             {
                 throw new InvalidCellException();
             }
 
-            //restrict neigbour cell area
             int previousRow = (row - 1) < 0 ? row : row - 1;
-            int nextRow = (row + 1) >= Rows ? row : row + 1;
+            int nextRow = (row + 1) >= this.Rows ? row : row + 1;
             int previousColumn = (column - 1) < 0 ? column : column - 1;
-            int nextColumn = (column + 1) >= Columns ? column : column + 1; ;
+            int nextColumn = (column + 1) >= this.Columns ? column : column + 1;
 
-            int count = 0;
             for (int i = previousRow; i <= nextRow; i++)
             {
                 for (int j = previousColumn; j <= nextColumn; j++)
@@ -128,6 +184,20 @@ namespace MinesweeperProject
             return count;
         }
 
+        /// <summary>
+        /// Replace current grid with a new smillar one.
+        /// </summary>
+        private void RestartGrid()
+        {
+            this.Grid = new MinesweeperCell[this.Rows, this.Columns];
+        }
+
+        /// <summary>
+        /// Set value of a cell on given coordinates
+        /// </summary>
+        /// <param name="row">X coordinate</param>
+        /// <param name="column">Y coordinate</param>
+        /// <param name="value">New cell value</param>
         private void SetCellValue(int row, int column, char value)
         {
             if (!IsCellOnBoard(row, column))
@@ -138,33 +208,42 @@ namespace MinesweeperProject
             Grid[row, column].Value = value;
         }
 
+        /// <summary>
+        /// Put mines on the battleField
+        /// </summary>
         private void PlaceMines()
         {
-            List<int[]> coordinates = GetRandomCoorindates(this.MinesCount);
+            List<int[]> coordinates = GetRandomCoorindates(this.MinesCount, this.Rows, this.Columns);
             coordinates.ForEach(coordinate => SetCellValue(coordinate[0], coordinate[1], '*'));
         }
 
-        private List<int[]> GetRandomCoorindates(int minesCount)
+        /// <summary>
+        /// Generate a list of random coordinates in given range that don't repeat.
+        /// </summary>
+        /// <param name="coordinateCount">Amount of coordinates</param>
+        /// <param name="rows">Maximum X coordinate</param>
+        /// <param name="columns">Maximum Y coordinate</param>
+        /// <returns>A list of coordiates (int[]{x,y}})</returns>
+        private List<int[]> GetRandomCoorindates(int coordinateCount, int rows, int columns)
         {
-            List<int[]> coordinates = new List<int[]>(minesCount);
+            List<int[]> coordinates = new List<int[]>(coordinateCount);
             Random rnd = new Random();
-            while (coordinates.Count < minesCount)
+            while (coordinates.Count < coordinateCount)
             {
-                int row = rnd.Next(Rows);
-                int col = rnd.Next(Columns);
+                int row = rnd.Next(rows);
+                int col = rnd.Next(columns);
                 int[] coordinate = new int[] { row, col };
-                if (!CoordinateExists(coordinates, coordinate))
+                bool coordinateExists = coordinates
+                    .Select(coord => coord.SequenceEqual(coordinate))
+                    .Any(isContained => isContained);
+
+                if (!coordinateExists)
                 {
                     coordinates.Add(new[] { row, col });
                 }
             }
 
             return coordinates;
-        }
-
-        private bool CoordinateExists(List<int[]> coordinates, int[] coordinate)
-        {
-            return coordinates.Select(coord => coord.SequenceEqual(coordinate)).Any(isContained => isContained);
         }
 
         public override string ToString()
