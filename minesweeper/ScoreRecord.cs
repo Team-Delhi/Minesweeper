@@ -1,8 +1,10 @@
-﻿namespace MinesweeperProject
+﻿
+namespace MinesweeperProject
 {
     using System;
+    using System.Text;
 
-    class ScoreRecord : IComparable
+    internal class ScoreRecord : IComparable
     {
         public ScoreRecord(string playerName, int score)
         {
@@ -14,7 +16,7 @@
 
         public int Score { get; set; }
 
-        public int CompareTo(Object obj)
+        public int CompareTo(object obj)
         {
             var score = obj as ScoreRecord;
             if (score != null)
@@ -23,6 +25,13 @@
             }
 
             throw new ArgumentException("Compare Object is not ScoreRecord!");
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0} --> {1} cells \n", this.PlayerName, this.Score);
+            return sb.ToString();
         }
     }
 }

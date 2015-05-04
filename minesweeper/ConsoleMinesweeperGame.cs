@@ -1,14 +1,20 @@
-﻿using System.Collections.Generic;
-
-namespace MinesweeperProject
+﻿namespace MinesweeperProject
 {
     using System;
     using System.Linq;
     using System.Text;
+    using System.Collections.Generic;
 
-    class ConsoleMinesweeperGame
+    internal sealed class ConsoleMinesweeperGame
     {
-        public ConsoleMinesweeperGame(int rows, int columns, int minesCount)
+        private const string StartMessage = "Welcome to the game “Minesweeper”. Try to reveal all cells without mines. " +
+                                            "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' " +
+                                            "to quit the game.";
+
+        private static ConsoleMinesweeperGame instance;
+        private static readonly object SyncLock = new object();
+
+        private ConsoleMinesweeperGame(int rows, int columns, int minesCount)
         {
             this.Grid = new MinesweeperGrid(rows, columns, minesCount);
             this.ScoreBoard = new List<ScoreRecord>();
@@ -20,12 +26,26 @@ namespace MinesweeperProject
 
         public MinesweeperGrid Grid { get; private set; }
 
+        public static ConsoleMinesweeperGame Instance(int rows, int cols, int minesCount)
+        {
+                if (instance == null)
+                {
+                    lock (SyncLock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new ConsoleMinesweeperGame(rows, cols, minesCount);
+                        }
+                    }
+                }
+                return instance;
+        }
+
         public void Start()
         {
             this.Grid.RestartBoard();
             this.Score = 0;
-            const string startMessage = "Welcome to the game “Minesweeper”. Try to reveal all cells without mines. Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit the game.";
-            Console.WriteLine(startMessage);
+            Console.WriteLine(StartMessage);
             Console.WriteLine(Grid.ToString());
             NextCommand();
         }
@@ -33,7 +53,7 @@ namespace MinesweeperProject
         public void NextCommand()//console -  output grid and message to request command
         {
             
-            Console.Write("Enter row and column:");
+            Console.Write("Enter command or row and column: ");
             
             var commandLine = Console.ReadLine().ToUpper().Trim();
 
@@ -49,56 +69,59 @@ namespace MinesweeperProject
                 var firstCommand = commandList.ElementAt(0);
                 switch (firstCommand)
                 {
-                    case "RESTART": Start(); break;
+                    case "RESTART":
+                        Start();
+                        break;
                     case "TOP":
-                        {
-                            PrintScoreBoard();
-                            NextCommand();
-                        }; break;
-                    case "EXIT": Exit(); break;
+                        PrintScoreBoard();
+                        NextCommand();
+                        break;
+                    case "EXIT":
+                        Exit();
+                        break;
                     case "NAKOV":
+                        Grid.RevealMines();
+                        Console.WriteLine(Grid.ToString());
+                        NextCommand();
+                        break;
+                    default:
+                        int row, column;
+
+                        if (commandList.Count < 2)
                         {
+                            throw new CommandUnknownException();
+                        }
+
+                        var tryParse = (int.TryParse(commandList.ElementAt(0), out row));
+                        tryParse = (int.TryParse(commandList.ElementAt(1), out column) && tryParse);
+
+                        if (!tryParse)
+                        {
+                            throw new CommandUnknownException();
+                        }
+
+                        if (Grid.RevealCell(row, column) == '*')
+                        {
+                            Grid.MarkUnrevealedMines('-');
                             Grid.RevealMines();
                             Console.WriteLine(Grid.ToString());
-                            NextCommand();
-                        }; break;
-                    default:
+                            Console.WriteLine(
+                                "Booooom! You were killed by a mine. You revealed {0} cells without mines.", Score);
+                            Console.Write("Please enter your name for the top scoreboard: ");
+                            var playerName = Console.ReadLine();
+                            var score = new ScoreRecord(playerName, Score);
+                            ScoreBoard.Add(score);
+                            Console.WriteLine();
+                            PrintScoreBoard();
+                            Start();
+                        }
+                        else
                         {
-                            var row = 0;
-                            var column = 0;
-                            var tryParse = false;
-
-                            if (commandList.Count < 2)
-                                throw new CommandUnknownException();
-
-                            tryParse = (int.TryParse(commandList.ElementAt(0), out row));
-                            tryParse = (int.TryParse(commandList.ElementAt(1), out column) || tryParse);
-
-                            if (!tryParse)
-                                throw new CommandUnknownException();
-
-
-                            if (Grid.RevealCell(row, column) == '*')
-                            {
-                                Grid.MarkUnrevealedMines('-');
-                                Grid.RevealMines();
-                                Console.WriteLine(Grid.ToString());
-                                Console.WriteLine("Booooom! You were killed by a mine. You revealed {0} cells without mines.", Score);
-                                Console.Write("Please enter your name for the top scoreboard: ");
-                                var playerName = Console.ReadLine();
-                                ScoreBoard.Add(new ScoreRecord(playerName, Score));
-                                Console.WriteLine();
-                                PrintScoreBoard();
-                                Start();
-                            }
-                            else
-                            {
-                                Console.WriteLine(Grid.ToString());
-                                Score++;
-                                NextCommand();
-                            }
-
-                        }; break;
+                            Console.WriteLine(Grid.ToString());
+                            Score++;
+                            NextCommand();
+                        }
+                        break;
                 }
             }
             catch (InvalidCellException)
@@ -106,9 +129,9 @@ namespace MinesweeperProject
                 Console.WriteLine("Illegal move!");
                 NextCommand();
             }
-            catch (Exception e)
+            catch (CommandUnknownException)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Unknown command!");
                 NextCommand();
             }
         }
@@ -122,15 +145,12 @@ namespace MinesweeperProject
         {
             var sb = new StringBuilder();    
             sb.AppendLine("Scoreboard:");
-            ScoreBoard.Sort();
-            var i=0;
-            foreach (var sr in ScoreBoard)
+            this.ScoreBoard.Sort();
+            for (var i = 0; i < this.ScoreBoard.Count; i++)
             {
-                i++;
-                sb.AppendFormat("{0}. {1} --> {2} cells \n", i, sr.PlayerName, sr.Score);
+                sb.AppendFormat("{0}. {1}", i, this.ScoreBoard[i]);
             }
             Console.WriteLine(sb.ToString());
         }
-
     }
 }

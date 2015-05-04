@@ -47,8 +47,8 @@
     <Compile Include="MinesweeperCell.cs" />
     <Compile Include="MinesweeperExceptions.cs" />
     <Compile Include="MinesweeperGrid.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ScoreBoard.cs" />
+    <Compile Include="GameMain.cs" />
+    <Compile Include="ScoreRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
