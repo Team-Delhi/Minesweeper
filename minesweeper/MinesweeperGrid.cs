@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 namespace MinesweeperProject
 {
@@ -200,11 +199,6 @@ namespace MinesweeperProject
         /// <param name="value">New cell value</param>
         private void SetCellValue(int row, int column, char value)
         {
-            if (!IsCellOnBoard(row, column))
-            {
-                throw new InvalidCellException();
-            }
-
             Grid[row, column].Value = value;
         }
 
@@ -233,6 +227,7 @@ namespace MinesweeperProject
                 int row = rnd.Next(rows);
                 int col = rnd.Next(columns);
                 int[] coordinate = new int[] { row, col };
+
                 bool coordinateExists = coordinates
                     .Select(coord => coord.SequenceEqual(coordinate))
                     .Any(isContained => isContained);
