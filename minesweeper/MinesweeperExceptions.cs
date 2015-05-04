@@ -2,19 +2,20 @@
 {
     using System;
 
-    class InvalidCellException : Exception
+    internal class InvalidCellException : Exception
     {
         public InvalidCellException()
             : base("Invalid cell!")
         {
         }
+
         public InvalidCellException(string message)
             : base(message)
         {
         }
     }
 
-    class IllegalMoveException : Exception
+    internal class IllegalMoveException : Exception
     {
         public IllegalMoveException()
             : base("Illegal move!")
@@ -27,7 +28,7 @@
         }
     }
 
-    class CommandUnknownException : Exception
+    internal class CommandUnknownException : Exception
     {
         public CommandUnknownException()
             : base("Command unknown!")
@@ -39,7 +40,4 @@
         {
         }
     }
-
-
 }
-

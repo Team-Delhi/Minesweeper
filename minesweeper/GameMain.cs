@@ -2,10 +2,9 @@
 {
     public class GameMain
     {
-        static void Main()
+        public static void Main()
         {
-            var game = ConsoleMinesweeperGame.Instance(5,10,15);
-
+            var game = ConsoleMinesweeperGame.Instance(5, 10, 5);
             game.Start();
         }
     }

@@ -1,5 +1,4 @@
-﻿
-namespace MinesweeperProject
+﻿namespace MinesweeperProject
 {
     using System;
     using System.Text;

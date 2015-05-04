@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MinesweeperProject
+﻿namespace MinesweeperProject
 {
-    class MinesweeperGrid
-    {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
+    internal class MinesweeperGrid
+    {
         private MinesweeperCell[,] grid;
 
         /// <summary>
@@ -18,10 +17,10 @@ namespace MinesweeperProject
         /// <param name="minesCount">Amount of mines on the minefield</param>
         public MinesweeperGrid(int rows, int columns, int minesCount)
         {
-            Rows = rows;
-            Columns = columns;
-            MinesCount = minesCount;
-            Grid = new MinesweeperCell[rows, columns];
+            this.Rows = rows;
+            this.Columns = columns;
+            this.MinesCount = minesCount;
+            this.Grid = new MinesweeperCell[rows, columns];
         }
 
         /// <summary>
@@ -44,11 +43,15 @@ namespace MinesweeperProject
         /// </summary>
         private MinesweeperCell[,] Grid
         {
-            get { return grid; }
+            get
+            {
+                return this.grid;
+            }
+
             set
             {
-                grid = value;
-                FillGrid(grid);
+                this.grid = value;
+                this.FillGrid(this.grid);
             }
         }
 
@@ -57,17 +60,16 @@ namespace MinesweeperProject
         /// </summary>
         public void RestartBoard()
         {
-            RestartGrid();
-            PlaceMines();
+            this.RestartGrid();
+            this.PlaceMines();
         }
-
 
         /// <summary>
         /// Reveals all mines on the board.
         /// </summary>
         public void RevealMines()
         {
-            foreach (MinesweeperCell mine in grid)
+            foreach (MinesweeperCell mine in this.grid)
             {
                 if (mine.Value == '*')
                 {
@@ -76,16 +78,15 @@ namespace MinesweeperProject
             }
         }
 
-
         /// <summary>
         /// Replaces all fields that are unrevealed and not mines with given marker.
         /// </summary>
         /// <param name="marker">Marker to replace with</param>
         public void MarkUnrevealedMines(char marker)
         {
-            foreach (var elem in grid)
+            foreach (var elem in this.grid)
             {
-                if ((!elem.Revealed))
+                if (!elem.Revealed)
                 {
                     elem.Revealed = true;
                     if (elem.Value != '*')
@@ -134,21 +135,21 @@ namespace MinesweeperProject
         /// <returns></returns>
         public char RevealCell(int row, int column)
         {
-            if ((!IsCellOnBoard(row, column)) || grid[row, column].Revealed)
+            if ((!this.IsCellOnBoard(row, column)) || this.grid[row, column].Revealed)
             {
                 throw new InvalidCellException();
             }
 
-            grid[row, column].Revealed = true;
+            this.grid[row, column].Revealed = true;
 
-            if (grid[row, column].Value != '*')
+            if (this.grid[row, column].Value != '*')
             {
-                int neighbourMinesCount = GetNeighbourMinesCount(row, column);
-                SetCellValue(row, column, neighbourMinesCount.ToString()[0]);
+                int neighbourMinesCount = this.GetNeighbourMinesCount(row, column);
+                this.SetCellValue(row, column, neighbourMinesCount.ToString()[0]);
             }
-            return grid[row, column].Value;
-        }
 
+            return this.grid[row, column].Value;
+        }
 
         /// <summary>
         /// Get count of mines positioned around coordinate
@@ -160,7 +161,7 @@ namespace MinesweeperProject
         {
             int count = 0;
 
-            if (!IsCellOnBoard(row, column))
+            if (!this.IsCellOnBoard(row, column))
             {
                 throw new InvalidCellException();
             }
@@ -174,12 +175,13 @@ namespace MinesweeperProject
             {
                 for (int j = previousColumn; j <= nextColumn; j++)
                 {
-                    if (grid[i, j].Value == '*')
+                    if (this.grid[i, j].Value == '*')
                     {
                         count++;
                     }
                 }
             }
+
             return count;
         }
 
@@ -199,7 +201,7 @@ namespace MinesweeperProject
         /// <param name="value">New cell value</param>
         private void SetCellValue(int row, int column, char value)
         {
-            Grid[row, column].Value = value;
+            this.Grid[row, column].Value = value;
         }
 
         /// <summary>
@@ -207,8 +209,8 @@ namespace MinesweeperProject
         /// </summary>
         private void PlaceMines()
         {
-            List<int[]> coordinates = GetRandomCoorindates(this.MinesCount, this.Rows, this.Columns);
-            coordinates.ForEach(coordinate => SetCellValue(coordinate[0], coordinate[1], '*'));
+            List<int[]> coordinates = this.GetRandomCoorindates(this.MinesCount, this.Rows, this.Columns);
+            coordinates.ForEach(coordinate => this.SetCellValue(coordinate[0], coordinate[1], '*'));
         }
 
         /// <summary>
@@ -246,36 +248,30 @@ namespace MinesweeperProject
             StringBuilder sb = new StringBuilder();
             sb.Append("   ");
 
-            //generates column numbers
             for (int i = 0; i < this.Columns; i++)
             {
                 sb.AppendFormat(" {0}", i);
             }
-            sb.Append(" \n");
 
-            //generates -----------------
+            sb.Append(" \n");
             sb.Append("   ");
-            sb.Append('-', this.Columns * 2 + 1);
+            sb.Append('-', (this.Columns * 2) + 1);
             sb.Append(" \n");
 
             for (int i = 0; i < this.Rows; i++)
             {
-                //generates row number
                 sb.AppendFormat("{0} |", i);
-
-                //generate values in each row
                 for (int j = 0; j < this.Columns; j++)
                 {
-                    sb.AppendFormat(" {0}", grid[i, j].VisibleValue);
+                    sb.AppendFormat(" {0}", this.grid[i, j].VisibleValue);
                 }
+
                 sb.Append(" |\n");
             }
 
-            //generates -----------------
             sb.Append("   ");
-            sb.Append('-', this.Columns * 2 + 1);
+            sb.Append('-', (this.Columns * 2) + 1);
             sb.Append(" \n");
-
             return sb.ToString();
         }
     }

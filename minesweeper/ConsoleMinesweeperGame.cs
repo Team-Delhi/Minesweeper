@@ -1,9 +1,9 @@
 ﻿namespace MinesweeperProject
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Collections.Generic;
 
     /// <summary>
     /// This is the engine of the game
@@ -14,8 +14,9 @@
                                             "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' " +
                                             "to quit the game.";
 
-        private static ConsoleMinesweeperGame instance;
         private static readonly object SyncLock = new object();
+
+        private static ConsoleMinesweeperGame instance;
 
         private ConsoleMinesweeperGame(int rows, int columns, int minesCount)
         {
@@ -57,8 +58,8 @@
             this.Grid.RestartBoard();
             this.Score = 0;
             Console.WriteLine(StartMessage);
-            Console.WriteLine(Grid.ToString());
-            NextCommand();
+            Console.WriteLine(this.Grid.ToString());
+            this.NextCommand();
         }
 
         /// <summary>
@@ -66,7 +67,6 @@
         /// </summary>
         public void NextCommand()
         {
-            
             Console.Write("Enter command or row and column: ");
             
             var commandLine = Console.ReadLine().ToUpper().Trim();
@@ -75,7 +75,7 @@
             
             if (commandList.Count == 0)
             {
-                NextCommand();
+                this.NextCommand();
             }
 
             try
@@ -84,19 +84,19 @@
                 switch (firstCommand)
                 {
                     case "RESTART":
-                        Start();
+                        this.Start();
                         break;
                     case "TOP":
-                        PrintScoreBoard();
-                        NextCommand();
+                        this.PrintScoreBoard();
+                        this.NextCommand();
                         break;
                     case "EXIT":
-                        Exit();
+                        this.Exit();
                         break;
                     case "NAKOV":
-                        Grid.RevealMines();
-                        Console.WriteLine(Grid.ToString());
-                        NextCommand();
+                        this.Grid.RevealMines();
+                        Console.WriteLine(this.Grid.ToString());
+                        this.NextCommand();
                         break;
                     default:
                         int row, column;
@@ -106,47 +106,48 @@
                             throw new CommandUnknownException();
                         }
 
-                        var tryParse = (int.TryParse(commandList.ElementAt(0), out row));
-                        tryParse = (int.TryParse(commandList.ElementAt(1), out column) && tryParse);
+                        var tryParse = int.TryParse(commandList.ElementAt(0), out row);
+                        tryParse = int.TryParse(commandList.ElementAt(1), out column) && tryParse;
 
                         if (!tryParse)
                         {
                             throw new CommandUnknownException();
                         }
 
-                        if (Grid.RevealCell(row, column) == '*')
+                        if (this.Grid.RevealCell(row, column) == '*')
                         {
-                            Grid.MarkUnrevealedMines('-');
-                            Grid.RevealMines();
-                            Console.WriteLine(Grid.ToString());
+                            this.Grid.MarkUnrevealedMines('-');
+                            this.Grid.RevealMines();
+                            Console.WriteLine(this.Grid.ToString());
                             Console.WriteLine(
-                                "Booooom! You were killed by a mine. You revealed {0} cells without mines.", Score);
+                                "Booooom! You were killed by a mine. You revealed {0} cells without mines.", this.Score);
                             Console.Write("Please enter your name for the top scoreboard: ");
                             var playerName = Console.ReadLine();
-                            var score = new ScoreRecord(playerName, Score);
-                            ScoreBoard.Add(score);
+                            var score = new ScoreRecord(playerName, this.Score);
+                            this.ScoreBoard.Add(score);
                             Console.WriteLine();
-                            PrintScoreBoard();
-                            Start();
+                            this.PrintScoreBoard();
+                            this.Start();
                         }
                         else
                         {
                             Console.WriteLine(Grid.ToString());
-                            Score++;
-                            NextCommand();
+                            this.Score++;
+                            this.NextCommand();
                         }
+
                         break;
                 }
             }
             catch (InvalidCellException)
             {
                 Console.WriteLine("Illegal move!");
-                NextCommand();
+                this.NextCommand();
             }
             catch (CommandUnknownException)
             {
                 Console.WriteLine("Unknown command!");
-                NextCommand();
+                this.NextCommand();
             }
         }
 
@@ -164,6 +165,7 @@
             {
                 sb.AppendFormat("{0}. {1}", i, this.ScoreBoard[i]);
             }
+
             Console.WriteLine(sb.ToString());
         }
     }
