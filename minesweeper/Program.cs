@@ -12,7 +12,7 @@ namespace MinesweeperProject
     {
         static void Main(string[] args)
         {
-            var game = new ConsoleMinesweeperGame(5,10,15);
+            ConsoleMinesweeperGame game = new ConsoleMinesweeperGame(5,10,15);
 
             game.Start();
         }

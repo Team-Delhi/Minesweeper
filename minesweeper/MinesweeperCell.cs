@@ -25,7 +25,12 @@ namespace MinesweeperProject
         {
             get
             {
-                var result = revealed == false ? '?' : val;
+                char result;
+
+                if (revealed == false)// if not revealed then return ? else actual value
+                    result = '?';
+                else
+                    result = val;
 
                 return result;
             }

@@ -9,17 +9,40 @@ namespace MinesweeperProject
 {
     class ScoreRecord:IComparable
     {
+        private string playerName;
+        private int score;
+
         public ScoreRecord(string playerName, int score)
         {
-            this.PlayerName = playerName;
-            this.Score = score;
+            this.playerName = playerName;
+            this.score = score;
         }
 
-        public string PlayerName { get; set; }
+        public string PlayerName
+        {
+            get
+            {
+                return playerName;
+            }
+            set
+            {
+                playerName = value;
+            }
+        }
 
-        public int Score { get; set; }
+        public int Score
+        {
+            get
+            {
+                return score;
+            }
+            set
+            {
+                score = value;
+            }
+        }
 
-        public int CompareTo(object obj)
+        public int CompareTo(Object obj)
         {
             if (!(obj is ScoreRecord))
             {
@@ -27,7 +50,7 @@ namespace MinesweeperProject
                     new ArgumentException("Compare Object is not ScoreRecord!");
             }
 
-            return -1*this.Score.CompareTo(((ScoreRecord)obj).Score);
+            return -1*this.score.CompareTo(((ScoreRecord)obj).score);
         }
 
         
