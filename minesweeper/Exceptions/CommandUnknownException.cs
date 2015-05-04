@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class CommandUnknownException : Exception
+    public class CommandUnknownException : Exception
     {
         public CommandUnknownException()
             : base("Command unknown!")

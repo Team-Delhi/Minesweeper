@@ -9,7 +9,7 @@
     /// <summary>
     /// This is the engine of the game
     /// </summary>
-    internal sealed class ConsoleMinesweeperGame
+    public sealed class ConsoleMinesweeperGame
     {
         private const string StartMessage = "Welcome to the game “Minesweeper”. Try to reveal all cells without mines. " +
                                             "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' " +

@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class IllegalMoveException : Exception
+    public class IllegalMoveException : Exception
     {
         public IllegalMoveException()
             : base("Illegal move!")

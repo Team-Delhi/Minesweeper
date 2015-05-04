@@ -6,7 +6,7 @@
     using System.Text;
     using Exceptions;
 
-    internal class MinesweeperGrid
+    public class MinesweeperGrid
     {
         private MinesweeperCell[,] grid;
 

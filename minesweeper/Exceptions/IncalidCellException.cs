@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class InvalidCellException : Exception
+    public class InvalidCellException : Exception
     {
         public InvalidCellException()
             : base("Invalid cell!")

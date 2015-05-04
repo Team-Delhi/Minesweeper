@@ -3,7 +3,7 @@
     using System;
     using System.Text;
 
-    internal class ScoreRecord : IComparable
+    public class ScoreRecord : IComparable
     {
         /// <summary>
         /// Represents a score entry.

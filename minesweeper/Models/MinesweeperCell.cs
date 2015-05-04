@@ -2,7 +2,7 @@
 {
     using Interfaces;
 
-    internal class MinesweeperCell : IMinesweeperCell
+    public class MinesweeperCell : IMinesweeperCell
     {
         /// <summary>
         /// Represents a cell on the minefield.
