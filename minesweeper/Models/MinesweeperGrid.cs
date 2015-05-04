@@ -149,18 +149,6 @@
         }
 
         /// <summary>
-        /// Check if cell is on board.
-        /// </summary>
-        /// <param name="row">X coordinate</param>
-        /// <param name="column">Y coordinate</param>
-        /// <returns>boolean</returns>
-        public bool IsCellOnBoard(int row, int column)
-        {
-            bool onBoard = (row >= 0 && row < this.Rows) && (column >= 0 && column < this.Columns);
-            return onBoard;
-        }
-
-        /// <summary>
         /// Reveal a cell by given coordinates.
         /// </summary>
         /// <param name="row">X coordinate</param>
