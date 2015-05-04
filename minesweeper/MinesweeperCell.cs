@@ -47,10 +47,5 @@
                 revealed = value;
             }
         }
-        //methods
-        public void Reveal()
-        {
-            this.Revealed = true;
-        }
     }
 }

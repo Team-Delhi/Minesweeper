@@ -48,7 +48,7 @@ namespace MinesweeperProject
             {
                 if (mine.Value == '*')
                 {
-                    mine.Reveal();
+                    mine.Revealed = true;
                 }
             }
         }
@@ -57,10 +57,12 @@ namespace MinesweeperProject
         {
             foreach (var elem in grid)
             {
-                if ((elem.Value != '*') && (!elem.Revealed))
-                {
-                    elem.Value = marker;
-                    elem.Reveal();
+                if ((!elem.Revealed))
+                {   elem.Revealed = true;
+                    if (elem.Value != '*')
+                    {
+                        elem.Value = marker;
+                    }
                 }
             }
         }
@@ -89,7 +91,7 @@ namespace MinesweeperProject
                 throw new InvalidCellException();
             }
 
-            grid[row, column].Reveal();
+            grid[row, column].Revealed = true;
 
             if (grid[row, column].Value != '*')
             {
