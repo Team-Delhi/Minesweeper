@@ -5,6 +5,9 @@
     using System.Text;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// This is the engine of the game
+    /// </summary>
     internal sealed class ConsoleMinesweeperGame
     {
         private const string StartMessage = "Welcome to the game “Minesweeper”. Try to reveal all cells without mines. " +
@@ -26,6 +29,13 @@
 
         public MinesweeperGrid Grid { get; private set; }
 
+        /// <summary>
+        /// The method that creates the only instance of the engine
+        /// </summary>
+        /// <param name="rows">The rows of the grid</param>
+        /// <param name="cols">The cols of the grid</param>
+        /// <param name="minesCount">The count of the mines in the game</param>
+        /// <returns></returns>
         public static ConsoleMinesweeperGame Instance(int rows, int cols, int minesCount)
         {
                 if (instance == null)
@@ -38,6 +48,7 @@
                         }
                     }
                 }
+
                 return instance;
         }
 
@@ -50,7 +61,10 @@
             NextCommand();
         }
 
-        public void NextCommand()//console -  output grid and message to request command
+        /// <summary>
+        /// The method that accepts the commands and processes them
+        /// </summary>
+        public void NextCommand()
         {
             
             Console.Write("Enter command or row and column: ");
@@ -59,7 +73,7 @@
 
             var commandList = commandLine.Split(' ').ToList();
             
-            if (commandList.Count == 0)//if command list is empty
+            if (commandList.Count == 0)
             {
                 NextCommand();
             }
