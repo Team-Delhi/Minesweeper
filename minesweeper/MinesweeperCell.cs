@@ -11,7 +11,7 @@
         {
             get
             {
-                return this.Revealed ? '?' : this.Value;
+                return this.Revealed ? this.Value : '?';
             }
         }
         public char Value { get; set; }
