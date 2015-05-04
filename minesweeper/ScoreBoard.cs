@@ -1,46 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Xml;
-
-namespace MinesweeperProject
+﻿namespace MinesweeperProject
 {
+    using System;
+
     class ScoreRecord:IComparable
     {
-        private string playerName;
-        private int score;
-
         public ScoreRecord(string playerName, int score)
         {
-            this.playerName = playerName;
-            this.score = score;
+            this.PlayerName = playerName;
+            this.Score = score;
         }
 
-        public string PlayerName
-        {
-            get
-            {
-                return playerName;
-            }
-            set
-            {
-                playerName = value;
-            }
-        }
+        public string PlayerName { get; set; }
 
-        public int Score
-        {
-            get
-            {
-                return score;
-            }
-            set
-            {
-                score = value;
-            }
-        }
+        public int Score { get; set; }
 
         public int CompareTo(Object obj)
         {
@@ -50,10 +22,7 @@ namespace MinesweeperProject
                     new ArgumentException("Compare Object is not ScoreRecord!");
             }
 
-            return -1*this.score.CompareTo(((ScoreRecord)obj).score);
+            return -1*this.Score.CompareTo(((ScoreRecord)obj).Score);
         }
-
-        
     }
-
 }

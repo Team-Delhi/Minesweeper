@@ -129,9 +129,6 @@ namespace MinesweeperProject
 
             for (int i = 0; i < minesCount; i++)// fill mines
             {
-
-
-
                 int row = mineCoordinates[i] / columns;
                 int column = mineCoordinates[i] % columns;
                 SetCellValue(row, column, '*');
@@ -140,7 +137,7 @@ namespace MinesweeperProject
 
         private void put()
         {
-           for (int i = 0; i < rows; i++)
+            for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
@@ -151,9 +148,6 @@ namespace MinesweeperProject
                         SetCellValue(i, j, neighbourMinesCount.ToString()[0]);
                     }
                 }
-
-
-
             }
         }
 
@@ -192,8 +186,6 @@ namespace MinesweeperProject
                 {
                     elem.Reveal();
                 }
-
-
             }
         }
 

@@ -8,52 +8,22 @@ namespace MinesweeperProject
 {
     class MinesweeperGame
     {
-        private MinesweeperGrid grid;
-        private int score;
-        private List<ScoreRecord> scoreBoard;
+        public List<ScoreRecord> ScoreBoard { get; set; }
 
-        public List<ScoreRecord> ScoreBoard
-        {
-            get
-            {
-                return scoreBoard;
-            }
-            set
-            {
-                scoreBoard = value;
-            }
-        }
+        public int Score { get; set; }
 
-        public int Score 
-        { 
-            get
-            {
-                return score;
-            } 
-            set
-            {
-                score = value;
-            } 
-        }
+        public MinesweeperGrid Grid { get; private set; }
 
-        public MinesweeperGrid Grid
-        {
-            get
-            {
-                return grid;
-            }
-        }
-        
         public MinesweeperGame(int rows, int columns, int minesCount)
         {
-            grid = new MinesweeperGrid(rows, columns, minesCount);
-            scoreBoard = new List<ScoreRecord>();
+            this.Grid = new MinesweeperGrid(rows, columns, minesCount);
+            this.ScoreBoard = new List<ScoreRecord>();
         }
 
         public virtual void Start()
         {
-            Grid.Reset();
-            Score = 0;
+            this.Grid.Reset();
+            this.Score = 0;
         }
 
     }
