@@ -2,7 +2,7 @@
 {
     using System;
 
-    class ScoreRecord:IComparable
+    class ScoreRecord : IComparable
     {
         public ScoreRecord(string playerName, int score)
         {
@@ -16,13 +16,13 @@
 
         public int CompareTo(Object obj)
         {
-            if (!(obj is ScoreRecord))
+            var score = obj as ScoreRecord;
+            if (score != null)
             {
-                throw
-                    new ArgumentException("Compare Object is not ScoreRecord!");
+                return -1 * this.Score.CompareTo(score.Score);
             }
 
-            return -1*this.Score.CompareTo(((ScoreRecord)obj).Score);
+            throw new ArgumentException("Compare Object is not ScoreRecord!");
         }
     }
 }

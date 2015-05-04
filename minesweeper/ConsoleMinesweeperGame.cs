@@ -70,7 +70,7 @@
 
                             if (Grid.RevealCell(row, column) == '*')
                             {
-                                Grid.Mark('-');
+                                Grid.MarkUnrevealedMines('-');
                                 Grid.RevealMines();
                                 Console.WriteLine(Grid.ToString());
                                 Console.WriteLine("Booooom! You were killed by a mine. You revealed {0} cells without mines.", Score);

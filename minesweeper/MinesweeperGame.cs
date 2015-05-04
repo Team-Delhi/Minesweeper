@@ -18,7 +18,7 @@
 
         public virtual void Start()
         {
-            this.Grid.Reset();
+            this.Grid.RestartBoard();
             this.Score = 0;
         }
 
