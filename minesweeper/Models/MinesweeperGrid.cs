@@ -9,13 +9,14 @@
     public class MinesweeperGrid
     {
         private MinesweeperCell[,] grid;
+        private int minesCount;
 
         /// <summary>
         /// Represent the mine field.
         /// </summary>
         /// <param name="rows">Amount of rows in the minefield</param>
         /// <param name="columns">Amount of columns in the minefield</param>
-        /// <param name="minesCount">Amount of mines on the minefield</param>
+        /// <param name="minesCount">Amount of mines on the minefield</param>               
         public MinesweeperGrid(int rows, int columns, int minesCount)
         {
             this.Rows = rows;
@@ -37,7 +38,22 @@
         /// <summary>
         /// Amount of mines on the minefield.
         /// </summary>
-        private int MinesCount { get; set; }
+        internal int MinesCount
+        { 
+            get
+            {
+                return this.minesCount; 
+            }
+
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("The number of mines should be at least 1.");
+                }
+                this.minesCount = value;
+            } 
+        }
 
         /// <summary>
         /// A matrice representing the mines on the grid.
@@ -186,7 +202,7 @@
             {
                 throw new InvalidCellException();
             }
-
+            
             int previousRow = (row - 1) < 0 ? row : row - 1;
             int nextRow = (row + 1) >= this.Rows ? row : row + 1;
             int previousColumn = (column - 1) < 0 ? column : column - 1;
@@ -202,7 +218,6 @@
                     }
                 }
             }
-
             return count;
         }
 

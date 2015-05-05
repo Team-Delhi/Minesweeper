@@ -31,11 +31,33 @@ namespace TestMinesweeperProject
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCellException))]
-        public void TestRevealSell()
+        public void RevealSellShouldThroughExceptionWhenSellIsInvalid()
         {
             grid.RestartBoard();
             grid.RevealCell(10, 5);
         }
+
+         [TestMethod]
+        public void TestRevealSell()
+        {
+            MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 4);
+            secondGrid.RestartBoard();
+            char symbol = secondGrid.RevealCell(1, 1);
+            Assert.AreEqual('*', symbol);             
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+
+         public void TestRevealSellWhenNoMines()
+         {
+             MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 0);
+             secondGrid.RestartBoard();
+             char symbol = secondGrid.RevealCell(1, 1);             
+         }
+
+
+        
 
         [TestMethod]
 
@@ -46,6 +68,17 @@ namespace TestMinesweeperProject
             int numberOfNeighbourMines = secondGrid.GetNeighbourMinesCount(0, 0);
             Assert.AreEqual(1, numberOfNeighbourMines);
         }
+
+        [TestMethod]
+        
+        public void GetNeibourMinesCountShouldReturn()
+        {
+            MinesweeperGrid thirdGrid = new MinesweeperGrid(2, 2, 4);
+            thirdGrid.RestartBoard();
+            int numberOfNeighbourMines = thirdGrid.GetNeighbourMinesCount(0, 0);
+            Assert.AreEqual(4, numberOfNeighbourMines);
+        }
+
 
         
     }
