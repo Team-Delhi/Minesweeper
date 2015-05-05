@@ -47,7 +47,7 @@
 
             set
             {
-                if (value <= 0)
+                if (value <= 0 || this.Rows*this.Columns <= value)
                 {
                     throw new ArgumentOutOfRangeException("The number of mines should be at least 1.");
                 }

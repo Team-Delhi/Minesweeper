@@ -12,6 +12,22 @@ namespace TestMinesweeperProject
         MinesweeperGrid grid = new MinesweeperGrid(5, 10, 15);  
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+
+        public void MinesweeperGridShouldThrowExceptionWhenTheCountOfMinesIsInvalid()
+        {
+            MinesweeperGrid thirdGrid = new MinesweeperGrid(2, 2, 4);           
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+
+        public void MinesweeperGridShouldThrowExceptionWhenTheCountOfMinesIsZero()
+        {
+            MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 0);
+        }
+
+        [TestMethod]
 
         public void TestNumberOfMinesAfterRevealing()
         {
@@ -31,37 +47,23 @@ namespace TestMinesweeperProject
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCellException))]
-        public void RevealSellShouldThroughExceptionWhenSellIsInvalid()
+        public void RevealSellShouldThroughExceptionWhenRowIsInvalid()
         {
             grid.RestartBoard();
             grid.RevealCell(10, 5);
         }
 
-         [TestMethod]
-        public void TestRevealSell()
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCellException))]
+        public void RevealSellShouldThroughExceptionWhenColumnIsInvalid()
         {
-            MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 4);
-            secondGrid.RestartBoard();
-            char symbol = secondGrid.RevealCell(1, 1);
-            Assert.AreEqual('*', symbol);             
+            grid.RestartBoard();
+            grid.RevealCell(0, 20);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
 
-         public void TestRevealSellWhenNoMines()
-         {
-             MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 0);
-             secondGrid.RestartBoard();
-             char symbol = secondGrid.RevealCell(1, 1);             
-         }
-
-
-        
-
-        [TestMethod]
-
-        public void TestGetNeibourMinesCount()
+        public void TestGetNeibourMinesCountWithOneMine()
         {
             MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 1);
             secondGrid.RestartBoard();
@@ -70,16 +72,25 @@ namespace TestMinesweeperProject
         }
 
         [TestMethod]
-        
-        public void GetNeibourMinesCountShouldReturn()
+
+        public void TestGetNeibourMinesCount()
         {
-            MinesweeperGrid thirdGrid = new MinesweeperGrid(2, 2, 4);
-            thirdGrid.RestartBoard();
-            int numberOfNeighbourMines = thirdGrid.GetNeighbourMinesCount(0, 0);
-            Assert.AreEqual(4, numberOfNeighbourMines);
+            MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 3);
+            secondGrid.RestartBoard();
+            int numberOfNeighbourMines = secondGrid.GetNeighbourMinesCount(0, 0);
+            bool isTwoOrThree = (numberOfNeighbourMines == 2 || numberOfNeighbourMines == 3);
+            Assert.IsTrue(isTwoOrThree);
         }
 
+        //[TestMethod]
 
-        
+        //public void TestMarkUnrevealedMines()
+        //{
+        //    MinesweeperGrid secondGrid = new MinesweeperGrid(2, 2, 3);
+        //    secondGrid.RestartBoard();
+        //    secondGrid.RevealMines();
+        //    int count = secondGrid.ToString().Count(f => f == '-');
+        //    Assert.AreEqual(1, count);
+        //}
     }
 }
