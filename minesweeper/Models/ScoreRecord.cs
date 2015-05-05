@@ -31,7 +31,7 @@
             var score = obj as ScoreRecord;
             if (score != null)
             {
-                return -1 * this.Score.CompareTo(score.Score);
+                return this.Score.CompareTo(score.Score);
             }
 
             throw new ArgumentException("Compare Object is not ScoreRecord!");

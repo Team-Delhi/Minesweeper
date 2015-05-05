@@ -50,8 +50,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="TestMineseeperGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestScoreRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\minesweeper\MinesweeperProject.csproj">
