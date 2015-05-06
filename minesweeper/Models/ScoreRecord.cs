@@ -40,7 +40,7 @@
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendFormat("{0} --> {1} cells \n", this.PlayerName, this.Score);
+            sb.AppendFormat("{0} --> {1} cells\n", this.PlayerName, this.Score);
             return sb.ToString();
         }
     }

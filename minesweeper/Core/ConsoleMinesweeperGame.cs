@@ -70,9 +70,9 @@
         {
             Console.Write("Enter command or row and column: ");
             
-            var commandLine = Console.ReadLine().ToUpper().Trim();
+            string commandLine = Console.ReadLine().ToUpper().Trim();
 
-            var commandList = commandLine.Split(' ').ToList();
+            List<string> commandList = commandLine.Split(' ').ToList();
             
             if (commandList.Count == 0)
             {
@@ -81,7 +81,7 @@
 
             try
             {
-                var firstCommand = commandList.ElementAt(0);
+                string firstCommand = commandList.ElementAt(0);
                 switch (firstCommand)
                 {
                     case "RESTART":
@@ -159,14 +159,13 @@
 
         public void PrintScoreBoard()
         {
-            var sb = new StringBuilder();    
+            StringBuilder sb = new StringBuilder();    
             sb.AppendLine("Scoreboard:");
             this.ScoreBoard.Sort();
-            for (var i = 0; i < this.ScoreBoard.Count; i++)
+            for (int i = 1; i <= this.ScoreBoard.Count; i++)
             {
                 sb.AppendFormat("{0}. {1}", i, this.ScoreBoard[i]);
             }
-
             Console.WriteLine(sb.ToString());
         }
     }
