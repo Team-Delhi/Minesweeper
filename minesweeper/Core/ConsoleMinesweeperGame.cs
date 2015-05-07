@@ -161,11 +161,13 @@
         {
             StringBuilder sb = new StringBuilder();    
             sb.AppendLine("Scoreboard:");
-            this.ScoreBoard.Sort();
-            for (int i = 1; i <= this.ScoreBoard.Count; i++)
+            var topScore = this.ScoreBoard.OrderByDescending(score => score);
+            var count = 0;
+            foreach (var score in topScore)
             {
-                sb.AppendFormat("{0}. {1}", i, this.ScoreBoard[i]);
-            }
+                count++;
+                sb.AppendFormat("{0}. {1}", count, score);
+            }            
             Console.WriteLine(sb.ToString());
         }
     }
