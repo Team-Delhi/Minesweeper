@@ -95,6 +95,30 @@
                     Assert.AreEqual<string>(expected, sw.ToString());
                 }
             }
+        }
+
+        [TestMethod]        
+        public void NextCommandShouldCatchInvalidCommandException()
+        {
+            using (StringWriter sw = new StringWriter())
+            {
+                ConsoleMinesweeperGame game = ConsoleMinesweeperGame.Instance(10, 10, 5);
+
+                Console.SetOut(sw);
+
+                using (StringReader sr = new StringReader(string.Format("something{0}exit{0}",
+            Environment.NewLine)))
+                {
+                    Console.SetIn(sr);
+
+                    game.NextCommand();
+
+                    string expected = string.Format(
+                        "Enter command or row and column: Unknown command!{0}Enter command or row and column: Good bye!{0}",
+                        Environment.NewLine);
+                    Assert.AreEqual<string>(expected, sw.ToString());
+                }
+            }
         }        
     }
 }
