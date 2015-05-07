@@ -159,16 +159,18 @@
 
         public void PrintScoreBoard()
         {
-            StringBuilder sb = new StringBuilder();    
-            sb.AppendLine("Scoreboard:");
+            string top = "Scoreboard:\n";            
             var topScore = this.ScoreBoard.OrderByDescending(score => score);
             var count = 0;
             foreach (var score in topScore)
             {
                 count++;
-                sb.AppendFormat("{0}. {1}", count, score);
-            }            
-            Console.WriteLine(sb.ToString());
+                top += string.Format("{0}. {1}", count, score);
+                
+            }
+
+           Console.Write(top);
+
         }
     }
 }
